@@ -18,8 +18,11 @@ from app.config import (
     CURATED_DIR,
     CURATED_STREAM_DIR,
     DATASET_DIR,
+    HARD_NEGATIVE_CONFIDENCE,
+    HARD_NEGATIVE_DIR,
     LABELED_DIR,
     LABELS,
+    MODEL_VERSION_PATH,
     RAW_DIR,
     STREAM_RAW_DIR,
     STREAM_STALE_HOURS,
@@ -57,6 +60,9 @@ class StreamConnectionManager:
 class LabelRequest(BaseModel):
     filename: str
     label: str
+    predicted_label: str | None = None
+    confidence: float | None = None
+    model_version: str | None = None
 
 
 app = FastAPI(title="StreetPulse ML Backend", version="1.0.0")
@@ -129,9 +135,10 @@ def root() -> dict[str, str]:
 def health() -> dict[str, str]:
     try:
         load_model()
-        return {"status": "ok", "model": "loaded"}
+        model_version = MODEL_VERSION_PATH.read_text(encoding="utf-8").strip() if MODEL_VERSION_PATH.exists() else "unknown"
+        return {"status": "ok", "model": "loaded", "model_version": model_version}
     except FileNotFoundError:
-        return {"status": "degraded", "model": "missing"}
+        return {"status": "degraded", "model": "missing", "model_version": "unknown"}
 
 
 @app.get("/images")
@@ -191,6 +198,10 @@ async def label_image(payload: LabelRequest, background_tasks: BackgroundTasks) 
         _post_label_tasks,
         filename=normalized_name,
         label=payload.label,
+        predicted_label=payload.predicted_label,
+        confidence=payload.confidence,
+        model_version=payload.model_version,
+        labeled_path=destination,
     )
 
     return {"status": "success", "new_path": str(new_path).replace("\\", "/")}
@@ -264,6 +275,7 @@ async def _process_stream_image(saved_path: Path, filename: str) -> None:
             "prediction": {
                 "label": prediction["label"],
                 "confidence": prediction["confidence"],
+                "model_version": prediction.get("model_version", "unknown"),
             },
         }
         await stream_connections.broadcast(payload)
@@ -273,11 +285,37 @@ async def _process_stream_image(saved_path: Path, filename: str) -> None:
             saved_path.unlink(missing_ok=True)
 
 
-async def _post_label_tasks(*, filename: str, label: str) -> None:
+async def _post_label_tasks(
+    *,
+    filename: str,
+    label: str,
+    predicted_label: str | None,
+    confidence: float | None,
+    model_version: str | None,
+    labeled_path: Path,
+) -> None:
     """Broadcast labeled event, persist metadata, and trigger auto-train if threshold reached."""
     await stream_connections.broadcast({"type": "labeled", "filename": filename})
 
-    meta.record_label(filename, label, source="stream")
+    meta.record_label(
+        filename,
+        label,
+        source="stream",
+        predicted_label=predicted_label,
+        confidence=confidence,
+        model_version=model_version,
+    )
+
+    if _should_promote_hard_negative(predicted_label=predicted_label, true_label=label, confidence=confidence):
+        _copy_to_hard_negative(labeled_path, label)
+        if predicted_label is not None:
+            meta.record_hard_negative(
+                filename=filename,
+                predicted_label=predicted_label,
+                true_label=label,
+                confidence=confidence,
+                model_version=model_version,
+            )
 
     total = meta.count_labeled()
     if total > 0 and total % AUTO_TRAIN_THRESHOLD == 0:
@@ -290,12 +328,37 @@ def _run_auto_train() -> None:
     try:
         from training.train import train
         from training.export_onnx import export
-        train()
-        export()
+
+        result = train()
+        model_version = str(result.get("model_version", "baseline"))
+        export(model_version=model_version)
         reload_model()
-        log.info("Auto-train complete. Model reloaded.")
+        log.info("Auto-train complete. Model %s reloaded.", model_version)
     except Exception:
         log.exception("Auto-train failed.")
+
+
+def _should_promote_hard_negative(*, predicted_label: str | None, true_label: str, confidence: float | None) -> bool:
+    if predicted_label is None or confidence is None:
+        return False
+    if predicted_label == true_label:
+        return False
+    if confidence < HARD_NEGATIVE_CONFIDENCE:
+        return False
+
+    # Focus on high-confidence normal mistakes and other high-confidence misclassifications.
+    if predicted_label == "normal" and true_label != "normal":
+        return True
+    return True
+
+
+def _copy_to_hard_negative(image_path: Path, true_label: str) -> None:
+    destination_dir = HARD_NEGATIVE_DIR / true_label
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    destination = destination_dir / image_path.name
+    if destination.exists():
+        destination = destination_dir / f"{image_path.stem}_{uuid4().hex[:8]}{image_path.suffix}"
+    shutil.copy2(image_path, destination)
 
 
 @app.delete("/admin/cleanup-stream")

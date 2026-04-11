@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
+  checkHealth,
   extractFilenameFromImageUrl,
   fetchImages,
   imageUrlForPath,
@@ -44,6 +45,11 @@ export function SortingPage({ onBack }: SortingPageProps) {
     setConfidenceThreshold,
   } = useDatasetStore()
   const [datasetSource, setDatasetSource] = useState<'curated' | 'raw' | 'labeled'>('curated')
+  const [modelAvailable, setModelAvailable] = useState(false)
+
+  useEffect(() => {
+    checkHealth().then(({ modelAvailable: available }) => setModelAvailable(available))
+  }, [])
 
   const selectedImage = images[selectedIndex]
 
@@ -79,7 +85,8 @@ export function SortingPage({ onBack }: SortingPageProps) {
   )
 
   const predictCurrent = useCallback(async () => {
-    if (!selectedImage) {
+    // Skip: no image, already predicted, stream image, or model not loaded
+    if (!selectedImage || selectedImage.predictedLabel || selectedImage.source === 'stream' || !modelAvailable) {
       return
     }
 
@@ -97,11 +104,14 @@ export function SortingPage({ onBack }: SortingPageProps) {
       updateImage(selectedImage.id, {
         predictedLabel: result.label,
         confidence: result.confidence,
+        modelVersion: result.model_version,
       })
+    } catch {
+      // 503 = model not loaded; other errors are transient — degrade silently.
     } finally {
       setLoading(false)
     }
-  }, [selectedImage, setLoading, updateImage])
+  }, [modelAvailable, selectedImage, setLoading, updateImage])
 
   useEffect(() => {
     void predictCurrent()
@@ -118,13 +128,19 @@ export function SortingPage({ onBack }: SortingPageProps) {
     [images.length, selectedIndex, setSelectedIndex],
   )
 
+  // An image can be labeled if it lives in curated/stream on the server.
+  // This covers live WS stream images (source='stream') and images loaded from
+  // the backend 'curated' view that resolve to curated/stream/ (source='server').
+  function isLabelable(image: DatasetImage): boolean {
+    return (
+      image.source === 'stream' ||
+      (image.source === 'server' && (image.sourcePath?.startsWith('curated/stream/') ?? false))
+    )
+  }
+
   const labelImage = useCallback(
     async (label: Label) => {
-      if (!selectedImage) {
-        return
-      }
-
-      if (selectedImage.source !== 'stream') {
+      if (!selectedImage || !isLabelable(selectedImage)) {
         return
       }
 
@@ -132,12 +148,12 @@ export function SortingPage({ onBack }: SortingPageProps) {
       removeImage(toRemove)
 
       try {
-        const filename = extractFilenameFromImageUrl(selectedImage.imageUrl)
-        if (!filename) {
-          throw new Error('Invalid image URL for labeling')
-        }
-
-        await labelStreamImage(filename, label)
+        // Use .name (reliable for all sources) rather than parsing the image URL.
+        await labelStreamImage(selectedImage.name, label, {
+          predictedLabel: selectedImage.predictedLabel,
+          confidence: selectedImage.confidence,
+          modelVersion: selectedImage.modelVersion,
+        })
       } catch {
         const current = useDatasetStore.getState().images
         useDatasetStore.getState().setImages([selectedImage, ...current])
@@ -148,58 +164,91 @@ export function SortingPage({ onBack }: SortingPageProps) {
 
   const autoLabelAll = useCallback(async () => {
     const streamCandidates = images.filter(
-      (image) => image.source === 'stream' && image.predictedLabel && image.confidence && image.confidence >= confidenceThreshold,
+      (image) =>
+        isLabelable(image) &&
+        image.predictedLabel &&
+        image.predictedLabel !== 'uncertain' &&
+        image.confidence &&
+        image.confidence >= confidenceThreshold,
     )
 
     for (const image of streamCandidates) {
-      const filename = extractFilenameFromImageUrl(image.imageUrl)
-      if (!filename || !image.predictedLabel) {
+      if (!image.predictedLabel || image.predictedLabel === 'uncertain') {
         continue
       }
 
       removeImage(image.id)
-      void labelStreamImage(filename, image.predictedLabel)
+      void labelStreamImage(image.name, image.predictedLabel, {
+        predictedLabel: image.predictedLabel,
+        confidence: image.confidence,
+        modelVersion: image.modelVersion,
+      })
     }
   }, [confidenceThreshold, images, removeImage])
 
   useEffect(() => {
-    const ws = new WebSocket(streamWebSocketUrl())
+    let destroyed = false
+    let ws: WebSocket | null = null
+    let reconnectTimer: ReturnType<typeof setTimeout> | null = null
 
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data) as WsMessage
+    function connect() {
+      if (destroyed) return
 
-        if (data.type === 'new_image') {
-          if (!data.image_url || !data.prediction) return
+      ws = new WebSocket(streamWebSocketUrl())
 
-          const filename = extractFilenameFromImageUrl(data.image_url) || `stream-${Date.now()}`
-          const next: DatasetImage = {
-            id: `${filename}-${Date.now()}`,
-            name: filename,
-            imageUrl: toAbsoluteImageUrl(data.image_url),
-            source: 'stream',
-            predictedLabel: data.prediction.label,
-            confidence: data.prediction.confidence,
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data) as WsMessage
+
+          if (data.type === 'new_image') {
+            if (!data.image_url || !data.prediction) return
+
+            const filename = extractFilenameFromImageUrl(data.image_url) || `stream-${Date.now()}`
+            const next: DatasetImage = {
+              id: `${filename}-${Date.now()}`,
+              name: filename,
+              imageUrl: toAbsoluteImageUrl(data.image_url),
+              source: 'stream',
+              predictedLabel: data.prediction.label,
+              confidence: data.prediction.confidence,
+              modelVersion: data.prediction.model_version,
+            }
+
+            const current = useDatasetStore.getState().images
+            useDatasetStore.getState().setImages([next, ...current])
+            return
           }
 
-          const current = useDatasetStore.getState().images
-          useDatasetStore.getState().setImages([next, ...current])
-          return
+          if (data.type === 'labeled') {
+            const current = useDatasetStore.getState().images
+            // Use img.name which is reliable for both stream and server images.
+            const updated = current.filter((img) => img.name !== data.filename)
+            useDatasetStore.getState().setImages(updated)
+          }
+        } catch {
+          // Ignore malformed websocket payloads.
         }
+      }
 
-        if (data.type === 'labeled') {
-          // Another client labeled this image — remove it from our grid.
-          const current = useDatasetStore.getState().images
-          const updated = current.filter((img) => extractFilenameFromImageUrl(img.imageUrl) !== data.filename)
-          useDatasetStore.getState().setImages(updated)
-        }
-      } catch {
-        // Ignore malformed websocket payloads.
+      ws.onerror = () => {
+        ws?.close()
+      }
+
+      ws.onclose = () => {
+        if (destroyed) return
+        reconnectTimer = setTimeout(connect, 3000)
       }
     }
 
+    // Delay by one tick: StrictMode cleanup runs synchronously and cancels
+    // this timer before the socket is ever created, suppressing the
+    // "WebSocket closed before established" browser warning in dev.
+    reconnectTimer = setTimeout(connect, 0)
+
     return () => {
-      ws.close()
+      destroyed = true
+      if (reconnectTimer !== null) clearTimeout(reconnectTimer)
+      ws?.close()
     }
   }, [])
 
@@ -273,7 +322,12 @@ export function SortingPage({ onBack }: SortingPageProps) {
               </button>
             ))}
           </div>
-          <div className="ml-auto flex gap-4 text-sm text-slate-400">
+          <div className="ml-auto flex items-center gap-4 text-sm text-slate-400">
+            {!modelAvailable && (
+              <span className="rounded bg-yellow-900/60 px-2 py-0.5 text-xs text-yellow-300">
+                model not loaded — predictions disabled
+              </span>
+            )}
             <span>Total: {stats.total}</span>
             <span>Predicted: {stats.predicted}</span>
             <span>Pending: {stats.pending}</span>

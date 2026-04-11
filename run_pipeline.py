@@ -32,10 +32,10 @@ def run(source: str = "api", resize_labeled: bool = False) -> None:
         print(f"  - Resized labeled images: {resized}")
 
     print("[4] Training model...")
-    train()
+    train_result = train()
 
     print("[5] Exporting ONNX...")
-    export()
+    export(model_version=str(train_result.get("model_version", "baseline")))
 
     print("DONE")
 

@@ -1,19 +1,29 @@
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
 import requests
 
 from app.config import API_URL, RAW_DIR
 
+log = logging.getLogger(__name__)
+
 
 def fetch_images(api_url: str | None = None) -> int:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     source_url = api_url or API_URL
 
-    response = requests.get(source_url, timeout=20)
-    response.raise_for_status()
-    data = response.json()
+    try:
+        response = requests.get(source_url, timeout=20)
+        response.raise_for_status()
+        data = response.json()
+    except requests.exceptions.ConnectionError:
+        log.warning("API ingestion skipped: cannot reach %s (server not running)", source_url)
+        return 0
+    except requests.exceptions.RequestException as exc:
+        log.warning("API ingestion skipped: %s", exc)
+        return 0
 
     if not isinstance(data, list):
         raise ValueError("API response must be a JSON array")

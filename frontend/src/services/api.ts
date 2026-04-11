@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Label, PredictionResult } from '../types'
+import type { Label, PredictedLabel, PredictionResult } from '../types'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000'
 
@@ -12,6 +12,15 @@ export interface ServerImageItem {
   name: string
   path: string
   folder: string
+}
+
+export async function checkHealth(): Promise<{ modelAvailable: boolean }> {
+  try {
+    const { data } = await api.get<{ status: string; model: string }>('/health')
+    return { modelAvailable: data.model === 'loaded' }
+  } catch {
+    return { modelAvailable: false }
+  }
 }
 
 export async function predictImage(file: File): Promise<PredictionResult> {
@@ -31,10 +40,17 @@ export async function fetchImages(source: 'raw' | 'curated' | 'labeled' = 'curat
   return data.images
 }
 
-export async function labelStreamImage(filename: string, label: Label): Promise<void> {
+export async function labelStreamImage(
+  filename: string,
+  label: Label,
+  prediction?: { predictedLabel?: PredictedLabel; confidence?: number; modelVersion?: string },
+): Promise<void> {
   await api.post('/label', {
     filename,
     label,
+    predicted_label: prediction?.predictedLabel,
+    confidence: prediction?.confidence,
+    model_version: prediction?.modelVersion,
   })
 }
 

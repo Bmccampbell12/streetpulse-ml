@@ -1,4 +1,5 @@
 export type Label = 'pothole' | 'crack' | 'normal' | 'manhole'
+export type PredictedLabel = Label | 'uncertain'
 
 export type ImageSource = 'local' | 'server' | 'stream'
 
@@ -9,13 +10,15 @@ export interface DatasetImage {
   sourcePath?: string
   source: ImageSource
   file?: File
-  predictedLabel?: Label
+  predictedLabel?: PredictedLabel
   confidence?: number
+  modelVersion?: string
 }
 
 export interface PredictionResult {
-  label: Label
+  label: PredictedLabel
   confidence: number
+  model_version?: string
 }
 
 export interface StreamEventMessage {
