@@ -1,0 +1,241 @@
+from __future__ import annotations
+
+import shutil
+from pathlib import Path
+from uuid import uuid4
+
+from fastapi import FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+
+from app.config import (
+    CURATED_DIR,
+    DATASET_DIR,
+    LABELED_DIR,
+    LABELS,
+    RAW_DIR,
+    STREAM_RAW_DIR,
+    ensure_directories,
+)
+from app.inference import predict
+from app.model_loader import load_model
+
+
+class StreamConnectionManager:
+    def __init__(self) -> None:
+        self._connections: set[WebSocket] = set()
+
+    async def connect(self, websocket: WebSocket) -> None:
+        await websocket.accept()
+        self._connections.add(websocket)
+
+    def disconnect(self, websocket: WebSocket) -> None:
+        self._connections.discard(websocket)
+
+    async def broadcast(self, message: dict[str, object]) -> None:
+        stale: list[WebSocket] = []
+        for websocket in list(self._connections):
+            try:
+                await websocket.send_json(message)
+            except Exception:
+                stale.append(websocket)
+        for websocket in stale:
+            self.disconnect(websocket)
+
+
+class LabelRequest(BaseModel):
+    filename: str
+    label: str
+
+
+app = FastAPI(title="StreetPulse ML Backend", version="1.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+ensure_directories()
+app.mount("/stream/image", StaticFiles(directory=str(STREAM_RAW_DIR)), name="stream_image")
+
+stream_connections = StreamConnectionManager()
+
+_VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+
+
+@app.on_event("startup")
+def startup() -> None:
+    ensure_directories()
+
+
+def _resolve_dataset_path(relative_path: str) -> Path:
+    candidate = (DATASET_DIR / relative_path).resolve()
+    dataset_root = DATASET_DIR.resolve()
+    try:
+        candidate.relative_to(dataset_root)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Invalid dataset path")
+    if not candidate.exists() or not candidate.is_file():
+        raise HTTPException(status_code=404, detail="Image not found")
+    return candidate
+
+
+def _safe_relative(path: Path) -> str:
+    return path.resolve().relative_to(DATASET_DIR.resolve()).as_posix()
+
+
+def _collect_images(directory: Path) -> list[dict[str, str]]:
+    if not directory.exists():
+        return []
+
+    rows: list[dict[str, str]] = []
+    for file_path in sorted(directory.rglob("*")):
+        if not file_path.is_file() or file_path.suffix.lower() not in _VALID_EXTENSIONS:
+            continue
+        rows.append(
+            {
+                "name": file_path.name,
+                "path": _safe_relative(file_path),
+                "folder": file_path.parent.name,
+            }
+        )
+    return rows
+
+
+@app.get("/")
+def root() -> dict[str, str]:
+    return {"status": "StreetPulse ML Backend Running"}
+
+
+@app.get("/health")
+def health() -> dict[str, str]:
+    try:
+        load_model()
+        return {"status": "ok", "model": "loaded"}
+    except FileNotFoundError:
+        return {"status": "degraded", "model": "missing"}
+
+
+@app.get("/images")
+def get_images(source: str = "curated") -> dict[str, object]:
+    source_map = {
+        "raw": RAW_DIR,
+        "curated": CURATED_DIR,
+        "labeled": LABELED_DIR,
+    }
+    if source not in source_map:
+        raise HTTPException(status_code=400, detail="source must be raw, curated, or labeled")
+
+    images = _collect_images(source_map[source])
+    return {"source": source, "count": len(images), "images": images}
+
+
+@app.get("/images/file")
+def get_image_file(path: str) -> FileResponse:
+    image_path = _resolve_dataset_path(path)
+    return FileResponse(image_path)
+
+
+@app.post("/label")
+async def label_image(payload: LabelRequest) -> dict[str, str]:
+    if payload.label not in LABELS:
+        raise HTTPException(status_code=400, detail=f"label must be one of: {', '.join(LABELS)}")
+
+    normalized_name = Path(payload.filename).name
+    if not normalized_name:
+        raise HTTPException(status_code=400, detail="filename is required")
+
+    stream_root = STREAM_RAW_DIR.resolve()
+    source_file = (STREAM_RAW_DIR / normalized_name).resolve()
+    try:
+        source_file.relative_to(stream_root)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid filename")
+
+    if not source_file.exists() or not source_file.is_file():
+        raise HTTPException(status_code=404, detail="Source stream image not found")
+
+    destination_dir = LABELED_DIR / payload.label
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    destination = destination_dir / normalized_name
+
+    if destination.exists():
+        raise HTTPException(status_code=409, detail="Destination file already exists")
+
+    try:
+        shutil.move(str(source_file), str(destination))
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Failed to move file for labeling") from exc
+
+    new_path = Path("dataset") / "labeled" / payload.label / normalized_name
+    return {"status": "success", "new_path": str(new_path).replace("\\", "/")}
+
+
+@app.post("/predict")
+async def predict_image(file: UploadFile = File(...)) -> dict[str, float | str]:
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="Uploaded file must be an image")
+
+    try:
+        return predict(file.file)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Inference failed") from exc
+
+
+@app.websocket("/ws/stream")
+async def stream_websocket(websocket: WebSocket) -> None:
+    await stream_connections.connect(websocket)
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        stream_connections.disconnect(websocket)
+    except Exception:
+        stream_connections.disconnect(websocket)
+
+
+@app.post("/stream-image")
+async def stream_image(file: UploadFile = File(...)) -> dict[str, object]:
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="Uploaded file must be an image")
+
+    STREAM_RAW_DIR.mkdir(parents=True, exist_ok=True)
+
+    suffix = Path(file.filename or "").suffix.lower()
+    if suffix not in _VALID_EXTENSIONS:
+        suffix = ".jpg"
+
+    filename = f"{uuid4().hex}{suffix}"
+    saved_path = STREAM_RAW_DIR / filename
+
+    try:
+        with saved_path.open("wb") as out_file:
+            shutil.copyfileobj(file.file, out_file)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Failed to save uploaded image") from exc
+
+    try:
+        with saved_path.open("rb") as image_file:
+            prediction = predict(image_file)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Inference failed for streamed image") from exc
+
+    payload: dict[str, object] = {
+        "type": "new_image",
+        "image_url": f"/stream/image/{filename}",
+        "prediction": {
+            "label": prediction["label"],
+            "confidence": prediction["confidence"],
+        },
+    }
+
+    await stream_connections.broadcast(payload)
+    return payload

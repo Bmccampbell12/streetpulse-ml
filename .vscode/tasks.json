@@ -1,0 +1,20 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "C:/Python314/python.exe",
+			"args": [
+				"-m",
+				"compileall",
+				"app",
+				"ingestion",
+				"processing",
+				"training",
+				"run_pipeline.py"
+			],
+			"group": "build"
+		}
+	]
+}
