@@ -24,4 +24,11 @@ export interface StreamEventMessage {
   prediction: PredictionResult
 }
 
+export interface LabeledEventMessage {
+  type: 'labeled'
+  filename: string
+}
+
+export type WsMessage = StreamEventMessage | LabeledEventMessage
+
 export const LABELS: Label[] = ['pothole', 'crack', 'normal', 'manhole']

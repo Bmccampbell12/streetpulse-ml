@@ -1,26 +1,35 @@
 from __future__ import annotations
 
+import asyncio
+import logging
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
-from fastapi import FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from app.config import (
+    AUTO_TRAIN_THRESHOLD,
     CURATED_DIR,
+    CURATED_STREAM_DIR,
     DATASET_DIR,
     LABELED_DIR,
     LABELS,
     RAW_DIR,
     STREAM_RAW_DIR,
+    STREAM_STALE_HOURS,
     ensure_directories,
 )
+from app import metadata as meta
 from app.inference import predict
-from app.model_loader import load_model
+from app.model_loader import load_model, reload_model
+
+log = logging.getLogger(__name__)
 
 
 class StreamConnectionManager:
@@ -60,7 +69,7 @@ app.add_middleware(
 )
 
 ensure_directories()
-app.mount("/stream/image", StaticFiles(directory=str(STREAM_RAW_DIR)), name="stream_image")
+app.mount("/stream/image", StaticFiles(directory=str(CURATED_STREAM_DIR)), name="stream_image")
 
 stream_connections = StreamConnectionManager()
 
@@ -70,6 +79,11 @@ _VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 @app.on_event("startup")
 def startup() -> None:
     ensure_directories()
+    try:
+        load_model()
+        log.info("Model warm-loaded on startup.")
+    except FileNotFoundError:
+        log.warning("ONNX model not found — inference will be unavailable until a model is placed in models/.")
 
 
 def _resolve_dataset_path(relative_path: str) -> Path:
@@ -141,7 +155,7 @@ def get_image_file(path: str) -> FileResponse:
 
 
 @app.post("/label")
-async def label_image(payload: LabelRequest) -> dict[str, str]:
+async def label_image(payload: LabelRequest, background_tasks: BackgroundTasks) -> dict[str, str]:
     if payload.label not in LABELS:
         raise HTTPException(status_code=400, detail=f"label must be one of: {', '.join(LABELS)}")
 
@@ -149,15 +163,15 @@ async def label_image(payload: LabelRequest) -> dict[str, str]:
     if not normalized_name:
         raise HTTPException(status_code=400, detail="filename is required")
 
-    stream_root = STREAM_RAW_DIR.resolve()
-    source_file = (STREAM_RAW_DIR / normalized_name).resolve()
+    curated_root = CURATED_STREAM_DIR.resolve()
+    source_file = (CURATED_STREAM_DIR / normalized_name).resolve()
     try:
-        source_file.relative_to(stream_root)
+        source_file.relative_to(curated_root)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid filename")
 
     if not source_file.exists() or not source_file.is_file():
-        raise HTTPException(status_code=404, detail="Source stream image not found")
+        raise HTTPException(status_code=404, detail="Source curated stream image not found")
 
     destination_dir = LABELED_DIR / payload.label
     destination_dir.mkdir(parents=True, exist_ok=True)
@@ -172,6 +186,13 @@ async def label_image(payload: LabelRequest) -> dict[str, str]:
         raise HTTPException(status_code=500, detail="Failed to move file for labeling") from exc
 
     new_path = Path("dataset") / "labeled" / payload.label / normalized_name
+
+    background_tasks.add_task(
+        _post_label_tasks,
+        filename=normalized_name,
+        label=payload.label,
+    )
+
     return {"status": "success", "new_path": str(new_path).replace("\\", "/")}
 
 
@@ -203,11 +224,9 @@ async def stream_websocket(websocket: WebSocket) -> None:
 
 
 @app.post("/stream-image")
-async def stream_image(file: UploadFile = File(...)) -> dict[str, object]:
+async def stream_image(background_tasks: BackgroundTasks, file: UploadFile = File(...)) -> dict[str, str]:
     if not file.content_type or not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="Uploaded file must be an image")
-
-    STREAM_RAW_DIR.mkdir(parents=True, exist_ok=True)
 
     suffix = Path(file.filename or "").suffix.lower()
     if suffix not in _VALID_EXTENSIONS:
@@ -217,25 +236,88 @@ async def stream_image(file: UploadFile = File(...)) -> dict[str, object]:
     saved_path = STREAM_RAW_DIR / filename
 
     try:
-        with saved_path.open("wb") as out_file:
-            shutil.copyfileobj(file.file, out_file)
+        STREAM_RAW_DIR.mkdir(parents=True, exist_ok=True)
+        contents = await file.read()
+        saved_path.write_bytes(contents)
     except Exception as exc:
         raise HTTPException(status_code=500, detail="Failed to save uploaded image") from exc
 
+    background_tasks.add_task(_process_stream_image, saved_path, filename)
+    return {"status": "accepted", "filename": filename}
+
+
+async def _process_stream_image(saved_path: Path, filename: str) -> None:
+    """Background task: infer from disk, move raw→curated/stream, broadcast WS."""
+    loop = asyncio.get_running_loop()
     try:
-        with saved_path.open("rb") as image_file:
-            prediction = predict(image_file)
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail="Inference failed for streamed image") from exc
+        image_bytes = saved_path.read_bytes()
+        from io import BytesIO
+        prediction = await loop.run_in_executor(None, predict, BytesIO(image_bytes))
 
-    payload: dict[str, object] = {
-        "type": "new_image",
-        "image_url": f"/stream/image/{filename}",
-        "prediction": {
-            "label": prediction["label"],
-            "confidence": prediction["confidence"],
-        },
-    }
+        CURATED_STREAM_DIR.mkdir(parents=True, exist_ok=True)
+        dest = CURATED_STREAM_DIR / filename
+        shutil.move(str(saved_path), str(dest))
 
-    await stream_connections.broadcast(payload)
-    return payload
+        payload: dict[str, object] = {
+            "type": "new_image",
+            "image_url": f"/stream/image/{filename}",
+            "prediction": {
+                "label": prediction["label"],
+                "confidence": prediction["confidence"],
+            },
+        }
+        await stream_connections.broadcast(payload)
+    except Exception:
+        log.exception("Stream image processing failed for %s", filename)
+        if saved_path.exists():
+            saved_path.unlink(missing_ok=True)
+
+
+async def _post_label_tasks(*, filename: str, label: str) -> None:
+    """Broadcast labeled event, persist metadata, and trigger auto-train if threshold reached."""
+    await stream_connections.broadcast({"type": "labeled", "filename": filename})
+
+    meta.record_label(filename, label, source="stream")
+
+    total = meta.count_labeled()
+    if total > 0 and total % AUTO_TRAIN_THRESHOLD == 0:
+        log.info("Auto-train threshold reached (%d labeled images). Starting background training.", total)
+        loop = asyncio.get_running_loop()
+        await loop.run_in_executor(None, _run_auto_train)
+
+
+def _run_auto_train() -> None:
+    try:
+        from training.train import train
+        from training.export_onnx import export
+        train()
+        export()
+        reload_model()
+        log.info("Auto-train complete. Model reloaded.")
+    except Exception:
+        log.exception("Auto-train failed.")
+
+
+@app.delete("/admin/cleanup-stream")
+async def cleanup_stream() -> dict[str, object]:
+    """Remove stale unlabeled images from curated/stream older than STREAM_STALE_HOURS."""
+    cutoff = datetime.now(timezone.utc).timestamp() - STREAM_STALE_HOURS * 3600
+    removed: list[str] = []
+    if CURATED_STREAM_DIR.exists():
+        for f in CURATED_STREAM_DIR.iterdir():
+            if f.is_file() and f.stat().st_mtime < cutoff:
+                f.unlink(missing_ok=True)
+                removed.append(f.name)
+    if STREAM_RAW_DIR.exists():
+        for f in STREAM_RAW_DIR.iterdir():
+            if f.is_file() and f.stat().st_mtime < cutoff:
+                f.unlink(missing_ok=True)
+                removed.append(f"raw/{f.name}")
+    return {"removed": len(removed), "files": removed}
+
+
+@app.get("/dataset/metadata")
+def get_metadata() -> dict[str, object]:
+    """Return the full dataset labeling index."""
+    index = meta.load_index()
+    return {"count": len(index), "entries": index}

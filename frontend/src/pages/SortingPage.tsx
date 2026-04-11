@@ -9,7 +9,7 @@ import {
   toAbsoluteImageUrl,
 } from '../services/api'
 import { useDatasetStore } from '../store/useDatasetStore'
-import type { DatasetImage, Label, StreamEventMessage } from '../types'
+import type { DatasetImage, Label, WsMessage } from '../types'
 import { LABELS } from '../types'
 import { ImageGrid } from '../components/ImageGrid'
 import { PreviewPanel } from '../components/PreviewPanel'
@@ -167,23 +167,32 @@ export function SortingPage({ onBack }: SortingPageProps) {
 
     ws.onmessage = (event) => {
       try {
-        const data = JSON.parse(event.data) as StreamEventMessage
-        if (data.type !== 'new_image' || !data.image_url || !data.prediction) {
+        const data = JSON.parse(event.data) as WsMessage
+
+        if (data.type === 'new_image') {
+          if (!data.image_url || !data.prediction) return
+
+          const filename = extractFilenameFromImageUrl(data.image_url) || `stream-${Date.now()}`
+          const next: DatasetImage = {
+            id: `${filename}-${Date.now()}`,
+            name: filename,
+            imageUrl: toAbsoluteImageUrl(data.image_url),
+            source: 'stream',
+            predictedLabel: data.prediction.label,
+            confidence: data.prediction.confidence,
+          }
+
+          const current = useDatasetStore.getState().images
+          useDatasetStore.getState().setImages([next, ...current])
           return
         }
 
-        const filename = extractFilenameFromImageUrl(data.image_url) || `stream-${Date.now()}`
-        const next: DatasetImage = {
-          id: `${filename}-${Date.now()}`,
-          name: filename,
-          imageUrl: toAbsoluteImageUrl(data.image_url),
-          source: 'stream',
-          predictedLabel: data.prediction.label,
-          confidence: data.prediction.confidence,
+        if (data.type === 'labeled') {
+          // Another client labeled this image — remove it from our grid.
+          const current = useDatasetStore.getState().images
+          const updated = current.filter((img) => extractFilenameFromImageUrl(img.imageUrl) !== data.filename)
+          useDatasetStore.getState().setImages(updated)
         }
-
-        const current = useDatasetStore.getState().images
-        useDatasetStore.getState().setImages([next, ...current])
       } catch {
         // Ignore malformed websocket payloads.
       }
