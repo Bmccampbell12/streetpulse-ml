@@ -103,8 +103,6 @@ def _load_class_map() -> dict[int, str]:
     except (OSError, ValueError, json.JSONDecodeError, TypeError):
         return {idx: label for idx, label in enumerate(LABELS)}
 
-_IDX_TO_LABEL = _load_class_map()
-
 
 def _record_inference_event(*, source_id: str | None, label: str, confidence: float, model_version: str) -> None:
     dataset_version = get_dataset_version()
@@ -149,9 +147,10 @@ def predict(image_file: BinaryIO, source_id: str | None = None) -> dict[str, flo
     temperature = _load_calibration_temperature()
     probabilities = _softmax(logits / temperature)
 
+    idx_to_label = _load_class_map()  # reload class map on each prediction
     idx = int(np.argmax(probabilities))
     confidence = float(probabilities[idx])
-    label = _IDX_TO_LABEL.get(idx, LABELS[idx] if idx < len(LABELS) else "unknown")
+    label = idx_to_label.get(idx, LABELS[idx] if idx < len(LABELS) else "unknown")
     if confidence < UNCERTAIN_THRESHOLD:
         label = "uncertain"
     model_version = _load_model_version()
