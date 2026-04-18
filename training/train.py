@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 import numpy as np
 import torch
 import torchvision
+from sklearn.metrics import classification_report
 from torch import nn, optim
 from torch.nn import functional as F
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset, WeightedRandomSampler
@@ -191,6 +192,10 @@ def train() -> dict[str, object]:
 
     criterion = nn.CrossEntropyLoss(weight=class_weights.to(device))
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS)
+
+    best_val_loss = float('inf')
+    best_model_path = TORCH_MODEL_PATH.parent / "best_model.pth"
 
     for epoch in range(EPOCHS):
         model.train()
@@ -216,28 +221,74 @@ def train() -> dict[str, object]:
 
         epoch_loss = running_loss / total
         epoch_acc = correct / total
-        print(f"Epoch {epoch + 1}/{EPOCHS} - loss: {epoch_loss:.4f} - acc: {epoch_acc:.4f}")
+        
+        # Validation loss for best checkpoint tracking
+        model.eval()
+        val_loss = 0.0
+        val_correct = 0
+        val_total = 0
+        with torch.no_grad():
+            for images, labels in val_loader:
+                images = images.to(device)
+                labels = labels.to(device)
+                outputs = model(images)
+                loss = criterion(outputs, labels)
+                val_loss += loss.item() * labels.size(0)
+                predictions = outputs.argmax(dim=1)
+                val_total += labels.size(0)
+                val_correct += (predictions == labels).sum().item()
+        
+        val_loss = val_loss / val_total if val_total > 0 else float('inf')
+        val_acc = val_correct / val_total if val_total > 0 else 0.0
+        
+        # Save best model
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), best_model_path)
+        
+        scheduler.step()
+        print(f"Epoch {epoch + 1}/{EPOCHS} - loss: {epoch_loss:.4f} - acc: {epoch_acc:.4f} - val_loss: {val_loss:.4f} - val_acc: {val_acc:.4f} - lr: {scheduler.get_last_lr()[0]:.6f}")
 
     model.eval()
     val_logits: list[torch.Tensor] = []
     val_labels: list[torch.Tensor] = []
+    all_preds = []
+    all_labels = []
     with torch.no_grad():
         for images, labels in val_loader:
             images = images.to(device)
             outputs = model(images)
             val_logits.append(outputs)
             val_labels.append(labels.to(device))
+            
+            # Collect predictions and labels for classification report
+            preds = outputs.argmax(dim=1).cpu().tolist()
+            lbls = labels.tolist()
+            all_preds.extend(preds)
+            all_labels.extend(lbls)
 
     logits = torch.cat(val_logits, dim=0) if val_logits else torch.empty(0, NUM_CLASSES, device=device)
     labels_tensor = torch.cat(val_labels, dim=0) if val_labels else torch.empty(0, dtype=torch.long, device=device)
     temperature = _temperature_scale(logits, labels_tensor)
+
+    # Print per-class metrics
+    class_names = [k for k, _ in sorted(base_dataset.class_to_idx.items(), key=lambda x: x[1])]
+    print("\nPer-class Classification Report:")
+    print(classification_report(all_labels, all_preds, target_names=class_names))
 
     version = _build_version_tag(USE_WEIGHTED_SAMPLER, has_hard_negatives)
     version_weights_path = TORCH_MODEL_PATH.parent / f"{version}.pth"
 
     TORCH_MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
     torch.save(model.cpu().state_dict(), version_weights_path)
-    torch.save(model.state_dict(), TORCH_MODEL_PATH)
+    
+    # Copy best model to standard location if it exists
+    if best_model_path.exists():
+        import shutil
+        shutil.copyfile(best_model_path, TORCH_MODEL_PATH)
+    else:
+        torch.save(model.state_dict(), TORCH_MODEL_PATH)
+    
     CLASS_INDEX_PATH.write_text(json.dumps(base_dataset.class_to_idx, indent=2), encoding="utf-8")
     CALIBRATION_PATH.write_text(json.dumps({"temperature": temperature, "model_version": version}, indent=2), encoding="utf-8")
 

@@ -13,7 +13,7 @@ def export(model_version: str | None = None) -> dict[str, str]:
 
     model = torchvision.models.resnet18(weights=None)
     model.fc = torch.nn.Linear(model.fc.in_features, NUM_CLASSES)
-    state_dict = torch.load(TORCH_MODEL_PATH, map_location="cpu")
+    state_dict = torch.load(TORCH_MODEL_PATH, map_location="cpu", weights_only=True)
     model.load_state_dict(state_dict)
     model.eval()
 
