@@ -11,6 +11,12 @@ log = logging.getLogger(__name__)
 _ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 
 
+def _destination_name(source_file: Path, source_dir: Path) -> str:
+    relative = source_file.relative_to(source_dir)
+    # Flatten nested SD-card folders into a stable filename for RAW_DIR.
+    return "__".join(relative.parts)
+
+
 def import_sd(sd_path: Path | None = None) -> int:
     source_dir = sd_path or SD_CARD_PATH
     RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -20,15 +26,23 @@ def import_sd(sd_path: Path | None = None) -> int:
         return 0
 
     copied = 0
-    for item in source_dir.iterdir():
+    failed = 0
+    for item in source_dir.rglob("*"):
         if not item.is_file() or item.suffix.lower() not in _ALLOWED_EXTENSIONS:
             continue
 
-        destination = RAW_DIR / item.name
+        destination = RAW_DIR / _destination_name(item, source_dir)
         if destination.exists():
             continue
 
-        shutil.copy2(item, destination)
-        copied += 1
+        try:
+            shutil.copy2(item, destination)
+            copied += 1
+        except OSError as exc:
+            failed += 1
+            log.warning("SD import skipped for %s: %s", item, exc)
+
+    if failed:
+        log.warning("SD ingestion completed with failures. copied=%d failed=%d", copied, failed)
 
     return copied

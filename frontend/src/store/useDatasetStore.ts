@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { DatasetImage } from '../types'
 
-type Screen = 'home' | 'sorting'
+type Screen = 'home' | 'sorting' | 'dashboard' | 'ops'
 
 interface DatasetState {
   screen: Screen

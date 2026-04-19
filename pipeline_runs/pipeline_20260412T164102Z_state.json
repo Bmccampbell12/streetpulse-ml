@@ -1,0 +1,60 @@
+{
+  "run_id": "pipeline_20260412T164102Z",
+  "status": "failed",
+  "current_stage": null,
+  "started_at": "2026-04-12T16:41:02.673765+00:00",
+  "finished_at": "2026-04-12T16:41:25.023864+00:00",
+  "stages": {
+    "INGEST": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-12T16:41:02.676816+00:00",
+      "finished_at": "2026-04-12T16:41:17.955148+00:00",
+      "output": {
+        "source": "api",
+        "api_downloaded": 0,
+        "sd_imported": 0,
+        "total_ingested": 0
+      },
+      "error": null
+    },
+    "VALIDATE": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-12T16:41:17.957248+00:00",
+      "finished_at": "2026-04-12T16:41:17.963064+00:00",
+      "output": {
+        "curated": 0,
+        "invalid": 0,
+        "too_small": 0,
+        "too_dark": 0,
+        "too_blurry": 0,
+        "dataset_version": "ds_e3b0c44298fc"
+      },
+      "error": null
+    },
+    "INFER": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-12T16:41:17.965443+00:00",
+      "finished_at": "2026-04-12T16:41:17.969351+00:00",
+      "output": {
+        "processed": 0,
+        "failed": 0,
+        "uncertain": 0,
+        "high_confidence": 0,
+        "batch_size": 16
+      },
+      "error": null
+    },
+    "POSTPROCESS": {
+      "status": "failed",
+      "attempts": 3,
+      "started_at": "2026-04-12T16:41:17.971765+00:00",
+      "finished_at": "2026-04-12T16:41:25.021319+00:00",
+      "output": null,
+      "error": "Training requires labeled images. Add images to these folders:\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\crack\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\normal\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\pothole\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole\nUse the Dataset Control Panel (http://localhost:5174) to stream and label images, or copy images in manually."
+    }
+  },
+  "error": "Training requires labeled images. Add images to these folders:\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\crack\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\normal\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\pothole\n  C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole\nUse the Dataset Control Panel (http://localhost:5174) to stream and label images, or copy images in manually."
+}

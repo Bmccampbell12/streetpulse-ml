@@ -1,0 +1,17 @@
+{
+  "run_id": "pipeline_20260413T224749Z",
+  "status": "running",
+  "current_stage": "INGEST",
+  "started_at": "2026-04-13T22:47:49.409882+00:00",
+  "finished_at": null,
+  "stages": {
+    "INGEST": {
+      "status": "running",
+      "attempts": 1,
+      "started_at": "2026-04-13T22:47:49.414331+00:00",
+      "finished_at": null,
+      "output": null,
+      "error": null
+    }
+  }
+}

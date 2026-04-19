@@ -1,0 +1,46 @@
+{
+  "run_id": "pipeline_20260418T234008Z",
+  "status": "running",
+  "current_stage": "INFER",
+  "started_at": "2026-04-18T23:40:08.009126+00:00",
+  "finished_at": null,
+  "stages": {
+    "INGEST": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-18T23:40:08.013716+00:00",
+      "finished_at": "2026-04-18T23:40:17.238182+00:00",
+      "output": {
+        "source": "api",
+        "sd_path": null,
+        "api_downloaded": 0,
+        "sd_imported": 0,
+        "total_ingested": 0
+      },
+      "error": null
+    },
+    "VALIDATE": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-18T23:40:17.243806+00:00",
+      "finished_at": "2026-04-18T23:40:28.089482+00:00",
+      "output": {
+        "curated": 1136,
+        "invalid": 0,
+        "too_small": 0,
+        "too_dark": 0,
+        "too_blurry": 0,
+        "dataset_version": "ds_1dda5f4aa349"
+      },
+      "error": null
+    },
+    "INFER": {
+      "status": "running",
+      "attempts": 1,
+      "started_at": "2026-04-18T23:40:28.093742+00:00",
+      "finished_at": null,
+      "output": null,
+      "error": null
+    }
+  }
+}

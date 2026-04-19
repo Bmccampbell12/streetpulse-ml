@@ -1,0 +1,37 @@
+{
+  "run_id": "pipeline_20260419T000515Z",
+  "stages": {
+    "INGEST": {
+      "source": "sd",
+      "sd_path": "C:\\Users\\bruce\\OneDrive\\Desktop\\StreetPulse\\Streetpulse Ride (Raw) Data V.1",
+      "api_downloaded": 0,
+      "sd_imported": 4265,
+      "total_ingested": 4265
+    },
+    "VALIDATE": {
+      "curated": 5401,
+      "invalid": 0,
+      "too_small": 0,
+      "too_dark": 0,
+      "too_blurry": 0,
+      "dataset_version": "ds_ba69fd2c0358"
+    },
+    "INFER": {
+      "processed": 5401,
+      "failed": 0,
+      "uncertain": 5401,
+      "high_confidence": 0,
+      "batch_size": 16
+    },
+    "POSTPROCESS": {
+      "resized_labeled": 0,
+      "skipped": true,
+      "reason": "missing_labeled_classes",
+      "missing_dirs": [
+        "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole"
+      ],
+      "dataset_version": "ds_ba69fd2c0358"
+    }
+  },
+  "sent_at": "2026-04-19T00:09:51.956246+00:00"
+}

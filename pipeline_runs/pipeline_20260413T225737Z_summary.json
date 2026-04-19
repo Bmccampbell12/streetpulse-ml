@@ -1,0 +1,39 @@
+{
+  "run_id": "pipeline_20260413T225737Z",
+  "stages": {
+    "INGEST": {
+      "source": "sd",
+      "sd_path": "D:\\ride_002",
+      "api_downloaded": 0,
+      "sd_imported": 0,
+      "total_ingested": 0
+    },
+    "VALIDATE": {
+      "curated": 617,
+      "invalid": 0,
+      "too_small": 0,
+      "too_dark": 0,
+      "too_blurry": 519,
+      "dataset_version": "ds_9b0615f803db"
+    },
+    "INFER": {
+      "processed": 617,
+      "failed": 0,
+      "uncertain": 0,
+      "high_confidence": 0,
+      "batch_size": 16
+    },
+    "POSTPROCESS": {
+      "resized_labeled": 0,
+      "skipped": true,
+      "reason": "missing_labeled_classes",
+      "missing_dirs": [
+        "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\pothole",
+        "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\crack",
+        "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole"
+      ],
+      "dataset_version": "ds_9b0615f803db"
+    }
+  },
+  "sent_at": "2026-04-13T22:58:08.987604+00:00"
+}

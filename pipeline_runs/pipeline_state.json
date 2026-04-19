@@ -1,0 +1,79 @@
+{
+  "run_id": "pipeline_20260419T000515Z",
+  "status": "success",
+  "current_stage": null,
+  "started_at": "2026-04-19T00:05:15.807842+00:00",
+  "finished_at": "2026-04-19T00:09:51.962046+00:00",
+  "stages": {
+    "INGEST": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-19T00:05:15.813753+00:00",
+      "finished_at": "2026-04-19T00:05:37.213587+00:00",
+      "output": {
+        "source": "sd",
+        "sd_path": "C:\\Users\\bruce\\OneDrive\\Desktop\\StreetPulse\\Streetpulse Ride (Raw) Data V.1",
+        "api_downloaded": 0,
+        "sd_imported": 4265,
+        "total_ingested": 4265
+      },
+      "error": null
+    },
+    "VALIDATE": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-19T00:05:37.217644+00:00",
+      "finished_at": "2026-04-19T00:06:22.070970+00:00",
+      "output": {
+        "curated": 5401,
+        "invalid": 0,
+        "too_small": 0,
+        "too_dark": 0,
+        "too_blurry": 0,
+        "dataset_version": "ds_ba69fd2c0358"
+      },
+      "error": null
+    },
+    "INFER": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-19T00:06:22.076835+00:00",
+      "finished_at": "2026-04-19T00:09:44.508983+00:00",
+      "output": {
+        "processed": 5401,
+        "failed": 0,
+        "uncertain": 5401,
+        "high_confidence": 0,
+        "batch_size": 16
+      },
+      "error": null
+    },
+    "POSTPROCESS": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-19T00:09:44.513526+00:00",
+      "finished_at": "2026-04-19T00:09:51.941191+00:00",
+      "output": {
+        "resized_labeled": 0,
+        "skipped": true,
+        "reason": "missing_labeled_classes",
+        "missing_dirs": [
+          "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole"
+        ],
+        "dataset_version": "ds_ba69fd2c0358"
+      },
+      "error": null
+    },
+    "SEND": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-19T00:09:51.951752+00:00",
+      "finished_at": "2026-04-19T00:09:51.957808+00:00",
+      "output": {
+        "summary_path": "C:\\Users\\bruce\\streetpulse-ml\\pipeline_runs\\pipeline_20260419T000515Z_summary.json"
+      },
+      "error": null
+    }
+  },
+  "error": null
+}

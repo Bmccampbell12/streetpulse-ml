@@ -1,0 +1,1631 @@
+[
+  {
+    "filename": "img_99.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-12T21:32:40.692246+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34938207268714905,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_99.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34938207268714905,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-12T21:32:41.076166+00:00"
+  },
+  {
+    "filename": "img_97.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-12T21:32:56.743210+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3446483612060547,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_97.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3446483612060547,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-12T21:32:56.949459+00:00"
+  },
+  {
+    "filename": "img_95.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-12T21:32:59.700416+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3458041250705719,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_95.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3458041250705719,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-12T21:33:00.054149+00:00"
+  },
+  {
+    "filename": "img_94.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-12T21:33:01.594744+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3463907241821289,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_94.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3463907241821289,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-12T21:33:01.943848+00:00"
+  },
+  {
+    "filename": "img_98.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:02.375179+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3474167585372925,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_98.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3474167585372925,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:02.884869+00:00"
+  },
+  {
+    "filename": "img_93.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:10.213954+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34766221046447754,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_93.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34766221046447754,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:10.604176+00:00"
+  },
+  {
+    "filename": "img_92.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:11.781613+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3447457551956177,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_92.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3447457551956177,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:12.142850+00:00"
+  },
+  {
+    "filename": "img_87.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:20.116263+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34899890422821045,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_87.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34899890422821045,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:20.451439+00:00"
+  },
+  {
+    "filename": "img_86.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:21.180608+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3445846736431122,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_86.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3445846736431122,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:21.563901+00:00"
+  },
+  {
+    "filename": "img_84.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:23.646845+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3488667905330658,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_84.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3488667905330658,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:23.999718+00:00"
+  },
+  {
+    "filename": "img_82.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:25.932824+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3472304344177246,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_82.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3472304344177246,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:26.298338+00:00"
+  },
+  {
+    "filename": "img_80.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:52:49.936676+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3444910943508148,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_80.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "pothole",
+    "confidence": 0.3444910943508148,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:52:50.537020+00:00"
+  },
+  {
+    "filename": "img_96.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:54:53.931136+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3431051969528198,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_96.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3431051969528198,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:54:54.306324+00:00"
+  },
+  {
+    "filename": "img_91.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:54:56.180108+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34517455101013184,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_91.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34517455101013184,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:54:56.568138+00:00"
+  },
+  {
+    "filename": "img_9.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:55:00.071913+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3599039316177368,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_9.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3599039316177368,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:55:00.479078+00:00"
+  },
+  {
+    "filename": "img_88.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:55:01.691342+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3481934666633606,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_88.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3481934666633606,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:55:02.091136+00:00"
+  },
+  {
+    "filename": "img_90.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T00:55:54.762183+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3481654226779938,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_90.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3481654226779938,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T00:55:55.238058+00:00"
+  },
+  {
+    "filename": "img_89.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:04:48.549437+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3479008078575134,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_89.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3479008078575134,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:04:48.880598+00:00"
+  },
+  {
+    "filename": "img_83.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:04:51.026498+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3448917269706726,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_83.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3448917269706726,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:04:51.497483+00:00"
+  },
+  {
+    "filename": "img_8.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:04:52.835763+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.36035990715026855,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_8.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.36035990715026855,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:04:53.307430+00:00"
+  },
+  {
+    "filename": "img_78.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:04:54.824927+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3477812111377716,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_78.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3477812111377716,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:04:55.311894+00:00"
+  },
+  {
+    "filename": "img_76.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:04:57.309447+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34919634461402893,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_76.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34919634461402893,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:04:57.793398+00:00"
+  },
+  {
+    "filename": "img_75.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:04:58.868577+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3493306338787079,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_75.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3493306338787079,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:04:59.274932+00:00"
+  },
+  {
+    "filename": "img_72.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:00.751891+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3527047038078308,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_72.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3527047038078308,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:01.243502+00:00"
+  },
+  {
+    "filename": "img_70.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:02.472893+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.359328031539917,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_70.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.359328031539917,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:02.954097+00:00"
+  },
+  {
+    "filename": "img_7.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:04.389341+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.35951393842697144,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_7.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.35951393842697144,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:04.887003+00:00"
+  },
+  {
+    "filename": "img_67.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:06.104299+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3557831048965454,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_67.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3557831048965454,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:06.600743+00:00"
+  },
+  {
+    "filename": "img_65.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:07.829868+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3601701557636261,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_65.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3601701557636261,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:08.325167+00:00"
+  },
+  {
+    "filename": "img_64.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:09.484543+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3656681180000305,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_64.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3656681180000305,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:09.930969+00:00"
+  },
+  {
+    "filename": "img_61.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:11.115451+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3503350019454956,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_61.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3503350019454956,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:11.613607+00:00"
+  },
+  {
+    "filename": "img_60.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:12.869459+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3463861346244812,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_60.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3463861346244812,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:13.336894+00:00"
+  },
+  {
+    "filename": "img_58.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:14.580663+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.36423373222351074,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_58.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.36423373222351074,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:15.100428+00:00"
+  },
+  {
+    "filename": "img_56.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:16.269193+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3527277410030365,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_56.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3527277410030365,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:16.748920+00:00"
+  },
+  {
+    "filename": "img_55.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:18.831164+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34977275133132935,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_55.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34977275133132935,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:19.620766+00:00"
+  },
+  {
+    "filename": "img_54.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:25.526444+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3510694205760956,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_54.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3510694205760956,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:26.384904+00:00"
+  },
+  {
+    "filename": "img_53.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:40.955133+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3521807789802551,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_53.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3521807789802551,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:41.305202+00:00"
+  },
+  {
+    "filename": "img_52.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T01:05:41.316559+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34833604097366333,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_52.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34833604097366333,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T01:05:41.617239+00:00"
+  },
+  {
+    "filename": "img_85.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:53:30.252255+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3500606119632721,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_85.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3500606119632721,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:53:31.113903+00:00"
+  },
+  {
+    "filename": "img_81.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:53:34.380558+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3479234278202057,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_81.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3479234278202057,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:53:35.245911+00:00"
+  },
+  {
+    "filename": "img_79.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:53:38.693085+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3450767695903778,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_79.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3450767695903778,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:53:40.073052+00:00"
+  },
+  {
+    "filename": "img_77.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:53:52.845874+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.34910067915916443,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_77.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.34910067915916443,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:53:56.477582+00:00"
+  },
+  {
+    "filename": "img_74.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:53:57.183954+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.35403746366500854,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_74.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.35403746366500854,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:54:00.605338+00:00"
+  },
+  {
+    "filename": "img_73.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:54:00.743838+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3507043421268463,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_73.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.3507043421268463,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:54:04.399989+00:00"
+  },
+  {
+    "filename": "img_71.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:54:04.651474+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.35216498374938965,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_71.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.35216498374938965,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:54:10.174017+00:00"
+  },
+  {
+    "filename": "img_69.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:54:10.522058+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.354671835899353,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_69.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.354671835899353,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:54:17.002411+00:00"
+  },
+  {
+    "filename": "img_68.jpg",
+    "label": "normal",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:54:17.143527+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.35533055663108826,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_68.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "normal",
+    "confidence": 0.35533055663108826,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T22:54:23.620884+00:00"
+  },
+  {
+    "filename": "img_997.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:36.491613+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3917188346385956,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_994.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:37.443430+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3425971567630768,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_993.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:38.396258+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.38686132431030273,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_990.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:39.347034+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.363202840089798,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_989.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:40.321243+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.35052913427352905,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_987.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:41.300429+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3378525376319885,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_986.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:42.299925+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.38201403617858887,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_983.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:43.225690+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.36037477850914,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_980.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:44.116230+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3376688063144684,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_979.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:45.182542+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3697071075439453,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_978.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:46.085774+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3440197706222534,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_976.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:47.146861+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3906794488430023,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_975.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:48.190523+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.35116785764694214,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_974.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:49.143898+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.35814955830574036,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_973.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:50.119400+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.43367597460746765,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_972.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:51.207864+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3422090709209442,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_971.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:52.126593+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.334885835647583,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_970.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:53.215203+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.343088299036026,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_969.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:54.229892+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3987221419811249,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_966.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:55.247113+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3534392714500427,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_965.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:56.193029+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.34471267461776733,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_962.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:57.142249+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.4010293185710907,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_960.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:58.070008+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3440823554992676,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_959.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:59.035701+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.37781569361686707,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_957.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:58:59.936525+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3432298004627228,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_956.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:00.874518+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3482806980609894,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_955.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:01.813205+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.37292855978012085,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_952.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:02.722742+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3615078628063202,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_942.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:03.671073+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3313313126564026,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_940.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:04.629920+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.35116761922836304,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_939.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:05.492840+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.33863550424575806,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_937.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:06.431768+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3524971008300781,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_936.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:07.371895+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3944898843765259,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_935.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:08.287384+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3934773802757263,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_934.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:09.205283+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.39169153571128845,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_933.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:10.282505+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.39594489336013794,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_932.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:11.248046+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3820579946041107,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_931.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:12.137689+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3776821792125702,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_930.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:13.031063+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3828769326210022,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_929.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:13.928347+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3751371204853058,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_928.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:14.826992+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3998325765132904,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_927.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:15.803299+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.4025648534297943,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_926.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:16.785054+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.41242101788520813,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_925.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:17.745840+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3730661869049072,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_921.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:18.684793+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.36337149143218994,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_920.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:19.546853+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3769940733909607,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_919.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:20.711668+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.37377050518989563,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_918.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:22.557159+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.36599352955818176,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_917.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:24.189479+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.37866902351379395,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_911.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:26.602422+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3639548122882843,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_899.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:27.646307+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3501347005367279,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_897.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:28.680372+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3565056025981903,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_896.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:30.192296+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3549911379814148,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_895.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:31.962133+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3514517843723297,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_887.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:33.234543+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3599729537963867,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_878.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:34.269380+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3652140200138092,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_877.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:36.069259+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.37154462933540344,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_876.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:37.734001+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.35560381412506104,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_875.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:38.838675+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.358066588640213,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_859.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:39.805079+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.3223675787448883,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_858.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:40.813773+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.41136711835861206,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_857.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:41.775476+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.4147866666316986,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_856.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:42.739239+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.4026085436344147,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_855.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T22:59:43.680650+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.41561368107795715,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_854.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:01:34.232396+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.42172542214393616,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_853.jpg",
+    "label": "pothole",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:08:14.204602+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.4016818106174469,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "filename": "img_852.jpg",
+    "label": "crack",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:26:16.658806+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.4211892783641815,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_852.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "crack",
+    "confidence": 0.4211892783641815,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T23:26:28.061875+00:00"
+  },
+  {
+    "filename": "img_851.jpg",
+    "label": "crack",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:26:28.347783+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.40537476539611816,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_851.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "crack",
+    "confidence": 0.40537476539611816,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T23:26:41.664766+00:00"
+  },
+  {
+    "filename": "img_848.jpg",
+    "label": "crack",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:26:52.989659+00:00",
+    "predicted_label": "pothole",
+    "confidence": 0.40378743410110474,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_848.jpg",
+    "predicted_label": "pothole",
+    "true_label": "crack",
+    "confidence": 0.40378743410110474,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T23:27:24.802753+00:00"
+  },
+  {
+    "filename": "img_850.jpg",
+    "label": "crack",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:34:55.517537+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.41558215022087097,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_850.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "crack",
+    "confidence": 0.41558215022087097,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T23:34:57.840036+00:00"
+  },
+  {
+    "filename": "img_847.jpg",
+    "label": "crack",
+    "source": "stream",
+    "timestamp": "2026-04-13T23:36:26.724416+00:00",
+    "predicted_label": "uncertain",
+    "confidence": 0.3855549991130829,
+    "device": null,
+    "model_version": "v_baseline_random"
+  },
+  {
+    "type": "autolabel_correction",
+    "filename": "img_847.jpg",
+    "predicted_label": "uncertain",
+    "true_label": "crack",
+    "confidence": 0.3855549991130829,
+    "model_version": "v_baseline_random",
+    "timestamp": "2026-04-13T23:36:56.193766+00:00"
+  }
+]

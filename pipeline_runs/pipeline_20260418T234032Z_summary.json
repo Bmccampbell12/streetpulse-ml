@@ -1,0 +1,37 @@
+{
+  "run_id": "pipeline_20260418T234032Z",
+  "stages": {
+    "INGEST": {
+      "source": "api",
+      "sd_path": null,
+      "api_downloaded": 0,
+      "sd_imported": 0,
+      "total_ingested": 0
+    },
+    "VALIDATE": {
+      "curated": 1136,
+      "invalid": 0,
+      "too_small": 0,
+      "too_dark": 0,
+      "too_blurry": 0,
+      "dataset_version": "ds_e33f9c5b8ba7"
+    },
+    "INFER": {
+      "processed": 1136,
+      "failed": 0,
+      "uncertain": 1136,
+      "high_confidence": 0,
+      "batch_size": 16
+    },
+    "POSTPROCESS": {
+      "resized_labeled": 0,
+      "skipped": true,
+      "reason": "missing_labeled_classes",
+      "missing_dirs": [
+        "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole"
+      ],
+      "dataset_version": "ds_e33f9c5b8ba7"
+    }
+  },
+  "sent_at": "2026-04-18T23:41:33.581120+00:00"
+}

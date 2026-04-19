@@ -1,0 +1,80 @@
+{
+  "run_id": "pipeline_20260413T005014Z",
+  "status": "success",
+  "current_stage": null,
+  "started_at": "2026-04-13T00:50:14.683076+00:00",
+  "finished_at": "2026-04-13T00:50:20.675966+00:00",
+  "stages": {
+    "INGEST": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-13T00:50:14.686208+00:00",
+      "finished_at": "2026-04-13T00:50:14.722052+00:00",
+      "output": {
+        "source": "sd",
+        "api_downloaded": 0,
+        "sd_imported": 0,
+        "total_ingested": 0
+      },
+      "error": null
+    },
+    "VALIDATE": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-13T00:50:14.724670+00:00",
+      "finished_at": "2026-04-13T00:50:15.751860+00:00",
+      "output": {
+        "curated": 203,
+        "invalid": 0,
+        "too_small": 0,
+        "too_dark": 0,
+        "too_blurry": 0,
+        "dataset_version": "ds_c0abeb768ae8"
+      },
+      "error": null
+    },
+    "INFER": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-13T00:50:15.754785+00:00",
+      "finished_at": "2026-04-13T00:50:20.556012+00:00",
+      "output": {
+        "processed": 203,
+        "failed": 0,
+        "uncertain": 203,
+        "high_confidence": 0,
+        "batch_size": 16
+      },
+      "error": null
+    },
+    "POSTPROCESS": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-13T00:50:20.559131+00:00",
+      "finished_at": "2026-04-13T00:50:20.661456+00:00",
+      "output": {
+        "resized_labeled": 0,
+        "skipped": true,
+        "reason": "missing_labeled_classes",
+        "missing_dirs": [
+          "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\pothole",
+          "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\crack",
+          "C:\\Users\\bruce\\streetpulse-ml\\dataset\\labeled\\manhole"
+        ],
+        "dataset_version": "ds_c0abeb768ae8"
+      },
+      "error": null
+    },
+    "SEND": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-13T00:50:20.669674+00:00",
+      "finished_at": "2026-04-13T00:50:20.672412+00:00",
+      "output": {
+        "summary_path": "C:\\Users\\bruce\\streetpulse-ml\\pipeline_runs\\pipeline_20260413T005014Z_summary.json"
+      },
+      "error": null
+    }
+  },
+  "error": null
+}
