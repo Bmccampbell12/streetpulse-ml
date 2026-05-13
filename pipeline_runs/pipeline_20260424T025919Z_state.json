@@ -1,0 +1,60 @@
+{
+  "run_id": "pipeline_20260424T025919Z",
+  "status": "running",
+  "current_stage": "POSTPROCESS",
+  "started_at": "2026-04-24T02:59:19.786371+00:00",
+  "finished_at": null,
+  "stages": {
+    "INGEST": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-24T02:59:19.796553+00:00",
+      "finished_at": "2026-04-24T02:59:35.040626+00:00",
+      "output": {
+        "source": "api",
+        "sd_path": null,
+        "api_downloaded": 0,
+        "sd_imported": 0,
+        "total_ingested": 0
+      },
+      "error": null
+    },
+    "VALIDATE": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-24T02:59:35.056556+00:00",
+      "finished_at": "2026-04-24T03:00:41.468873+00:00",
+      "output": {
+        "curated": 5401,
+        "invalid": 0,
+        "too_small": 0,
+        "too_dark": 0,
+        "too_blurry": 0,
+        "dataset_version": "ds_7aefed1535c2"
+      },
+      "error": null
+    },
+    "INFER": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-24T03:00:41.475345+00:00",
+      "finished_at": "2026-04-24T03:28:18.300714+00:00",
+      "output": {
+        "processed": 5401,
+        "failed": 0,
+        "uncertain": 5401,
+        "high_confidence": 0,
+        "batch_size": 16
+      },
+      "error": null
+    },
+    "POSTPROCESS": {
+      "status": "running",
+      "attempts": 1,
+      "started_at": "2026-04-24T03:28:18.379790+00:00",
+      "finished_at": null,
+      "output": null,
+      "error": null
+    }
+  }
+}

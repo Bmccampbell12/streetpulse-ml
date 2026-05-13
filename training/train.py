@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import json
+import logging
+import os
 import random
 from collections import Counter
 from datetime import datetime, timezone
 
 import numpy as np
+import requests
 import torch
 import torchvision
 from sklearn.metrics import classification_report
@@ -13,6 +16,8 @@ from torch import nn, optim
 from torch.nn import functional as F
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset, WeightedRandomSampler
 from torchvision import transforms
+
+log = logging.getLogger(__name__)
 
 from app.config import (
     BATCH_SIZE,
@@ -28,6 +33,34 @@ from app.config import (
     TORCH_MODEL_PATH,
     USE_WEIGHTED_SAMPLER,
 )
+
+
+def _send_slack_notification(epoch: int, loss: float, acc: float, val_loss: float, val_acc: float, lr: float) -> None:
+    """Send epoch metrics to Slack webhook if configured."""
+    webhook_url = os.getenv("STREETPULSE_SLACK_WEBHOOK")
+    if not webhook_url:
+        return
+
+    message = {
+        "blocks": [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"🔄 *Epoch {epoch} Complete*\n"
+                            f"Loss: `{loss:.4f}` | Acc: `{acc:.1%}`\n"
+                            f"Val Loss: `{val_loss:.4f}` | Val Acc: `{val_acc:.1%}`\n"
+                            f"LR: `{lr:.6f}`"
+                }
+            }
+        ]
+    }
+    try:
+        response = requests.post(webhook_url, json=message, timeout=5)
+        if response.status_code != 200:
+            log.warning(f"Slack notification failed with status {response.status_code}")
+    except Exception as e:
+        log.warning(f"Failed to send Slack notification: {e}")
 
 
 def _set_seed(seed: int) -> None:
@@ -247,7 +280,9 @@ def train() -> dict[str, object]:
             torch.save(model.state_dict(), best_model_path)
         
         scheduler.step()
-        print(f"Epoch {epoch + 1}/{EPOCHS} - loss: {epoch_loss:.4f} - acc: {epoch_acc:.4f} - val_loss: {val_loss:.4f} - val_acc: {val_acc:.4f} - lr: {scheduler.get_last_lr()[0]:.6f}")
+        lr = scheduler.get_last_lr()[0]
+        print(f"Epoch {epoch + 1}/{EPOCHS} - loss: {epoch_loss:.4f} - acc: {epoch_acc:.4f} - val_loss: {val_loss:.4f} - val_acc: {val_acc:.4f} - lr: {lr:.6f}")
+        _send_slack_notification(epoch + 1, epoch_loss, epoch_acc, val_loss, val_acc, lr)
 
     model.eval()
     val_logits: list[torch.Tensor] = []

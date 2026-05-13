@@ -1,0 +1,61 @@
+{
+  "run_id": "pipeline_20260424T171236Z",
+  "status": "failed",
+  "current_stage": null,
+  "started_at": "2026-04-24T17:12:36.213895+00:00",
+  "finished_at": "2026-04-24T17:41:52.033127+00:00",
+  "stages": {
+    "INGEST": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-24T17:12:36.226067+00:00",
+      "finished_at": "2026-04-24T17:12:51.446177+00:00",
+      "output": {
+        "source": "api",
+        "sd_path": null,
+        "api_downloaded": 0,
+        "sd_imported": 0,
+        "total_ingested": 0
+      },
+      "error": null
+    },
+    "VALIDATE": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-24T17:12:51.449828+00:00",
+      "finished_at": "2026-04-24T17:13:23.744239+00:00",
+      "output": {
+        "curated": 5401,
+        "invalid": 0,
+        "too_small": 0,
+        "too_dark": 0,
+        "too_blurry": 0,
+        "dataset_version": "ds_55cbc58c36a5"
+      },
+      "error": null
+    },
+    "INFER": {
+      "status": "success",
+      "attempts": 1,
+      "started_at": "2026-04-24T17:13:23.747720+00:00",
+      "finished_at": "2026-04-24T17:15:21.993167+00:00",
+      "output": {
+        "processed": 5401,
+        "failed": 0,
+        "uncertain": 5401,
+        "high_confidence": 0,
+        "batch_size": 16
+      },
+      "error": null
+    },
+    "POSTPROCESS": {
+      "status": "failed",
+      "attempts": 3,
+      "started_at": "2026-04-24T17:15:21.996482+00:00",
+      "finished_at": "2026-04-24T17:41:52.016546+00:00",
+      "output": null,
+      "error": "Number of classes, 3, does not match size of target_names, 4. Try specifying the labels parameter"
+    }
+  },
+  "error": "Number of classes, 3, does not match size of target_names, 4. Try specifying the labels parameter"
+}

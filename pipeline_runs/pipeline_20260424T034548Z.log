@@ -1,0 +1,13 @@
+2026-04-23 22:45:48,206 [INFO] __main__: stage INGEST starting
+2026-04-23 22:46:03,468 [WARNING] ingestion.from_api: API ingestion skipped: cannot reach http://localhost:3000/api/images (server not running)
+2026-04-23 22:46:03,472 [INFO] __main__: stage INGEST success
+2026-04-23 22:46:03,473 [INFO] __main__: stage VALIDATE starting
+2026-04-23 22:46:30,657 [INFO] __main__: stage VALIDATE success
+2026-04-23 22:46:30,657 [INFO] __main__: stage INFER starting
+2026-04-23 22:48:14,564 [INFO] __main__: stage INFER success
+2026-04-23 22:48:14,564 [INFO] __main__: stage POSTPROCESS starting
+2026-04-23 23:04:48,822 [ERROR] __main__: Pipeline terminated unexpectedly
+Traceback (most recent call last):
+  File "C:\Users\bruce\streetpulse-ml\run_pipeline.py", line 220, in run
+    raise RuntimeError(f"Stage {stage_name} failed after {result.attempts} attempts: {result.error}")
+RuntimeError: Stage POSTPROCESS failed after 3 attempts: Number of classes, 3, does not match size of target_names, 4. Try specifying the labels parameter

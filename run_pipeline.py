@@ -21,11 +21,38 @@ from app.versioning import snapshot_dataset_version
 from ingestion.from_api import fetch_images
 from ingestion.from_sd import import_sd
 from pipeline.state_machine import PipelineRunner, StageStatus
+import logging
+
 from processing.clean import filter_images_with_report
 from processing.resize import resize_all
 
 
+logger = logging.getLogger(__name__)
+
+
 _VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".tif", ".tiff"}
+
+
+def _configure_logging(run_id: str) -> None:
+    log_path = PIPELINE_RUNS_DIR / f"{run_id}.log"
+    root_logger = logging.getLogger()
+    if root_logger.handlers:
+        root_logger.handlers.clear()
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        handlers=[
+            logging.StreamHandler(),
+            logging.FileHandler(log_path, encoding="utf-8"),
+        ],
+    )
+
+
+def _source_id(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(Path.cwd().resolve()))
+    except ValueError:
+        return path.name
 
 
 def _now_stamp() -> str:
@@ -104,15 +131,25 @@ def run(source: str = "api", resize_labeled: bool = False, sd_path: Path | None 
                 total += 1
                 try:
                     with image_path.open("rb") as handle:
-                        result = predict(handle, source_id=str(image_path.resolve().relative_to(Path.cwd().resolve())))
+                        result = predict(handle, source_id=_source_id(image_path))
                     label = str(result["label"])
                     confidence = float(result["confidence"])
                     if label == "uncertain":
                         uncertain += 1
                     if confidence >= 0.9 and label != "uncertain":
                         high_conf += 1
+                except FileNotFoundError:
+                    failed += 1
+                    logger.warning("image missing during inference: %s", image_path)
+                except (OSError, ValueError) as e:
+                    failed += 1
+                    logger.warning("bad image %s: %s", image_path, e)
                 except Exception:
                     failed += 1
+                    logger.exception("unexpected inference failure for %s", image_path)
+
+                if total > 50 and failed / total > 0.2:
+                    raise RuntimeError(f"Inference failure rate {failed/total:.0%} — aborting stage")
 
         return {
             "processed": total,
@@ -172,20 +209,26 @@ def run(source: str = "api", resize_labeled: bool = False, sd_path: Path | None 
         ("SEND", _stage_send),
     ]
 
+    _configure_logging(run_id)
+
     try:
         for stage_name, stage_action in stage_map:
-            print(f"[{stage_name}] running...")
+            logger.info("stage %s starting", stage_name)
             result = runner.run_stage(stage_name, stage_action)
             if result.status != StageStatus.success:
                 runner.finalize(success=False, error=result.error)
                 raise RuntimeError(f"Stage {stage_name} failed after {result.attempts} attempts: {result.error}")
             stage_outputs[stage_name] = result.output or {}
-            print(f"[{stage_name}] success")
+            logger.info("stage %s success", stage_name)
 
         runner.finalize(success=True)
-        print(f"DONE ({run_id})")
+        logger.info("DONE (%s)", run_id)
     except Exception:
-        if (PIPELINE_STATE_PATH.exists() and json.loads(PIPELINE_STATE_PATH.read_text(encoding="utf-8")).get("status") != "failed"):
+        logger.exception("Pipeline terminated unexpectedly")
+        if (
+            PIPELINE_STATE_PATH.exists()
+            and json.loads(PIPELINE_STATE_PATH.read_text(encoding="utf-8")).get("status") != "failed"
+        ):
             runner.finalize(success=False, error="Pipeline terminated unexpectedly")
         raise
 

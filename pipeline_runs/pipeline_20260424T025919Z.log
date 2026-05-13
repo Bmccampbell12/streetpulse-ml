@@ -1,0 +1,8 @@
+2026-04-23 21:59:19,794 [INFO] __main__: stage INGEST starting
+2026-04-23 21:59:35,032 [WARNING] ingestion.from_api: API ingestion skipped: cannot reach http://localhost:3000/api/images (server not running)
+2026-04-23 21:59:35,046 [INFO] __main__: stage INGEST success
+2026-04-23 21:59:35,055 [INFO] __main__: stage VALIDATE starting
+2026-04-23 22:00:41,474 [INFO] __main__: stage VALIDATE success
+2026-04-23 22:00:41,474 [INFO] __main__: stage INFER starting
+2026-04-23 22:28:18,305 [INFO] __main__: stage INFER success
+2026-04-23 22:28:18,323 [INFO] __main__: stage POSTPROCESS starting
